@@ -1,6 +1,6 @@
 {
-  "name": "dfb-functions",
-  "version": "1.0.0",
+  "name": "az-simple-fn",
+  "version": "1.0.1",
   "description": "",
   "scripts": {
     "build": "npm run format && npm run lint && tsc",
