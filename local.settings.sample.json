@@ -1,0 +1,13 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AZURE_BLOB_STORAGE_ACCOUNT_NAME":"",
+    "AZURE_BLOB_STORAGE_ACCOUNT_KEY": "",
+    "AZURE_COSMOS_DB_MONGODB_CONNECTION_STRING": "",
+    "AZURE_COSMOS_DB_MONGODB_DATABASE_NAME": "",
+    "AZURE_COSMOS_DB_MONGODB_COLLECTION_NAME": ""
+  
+  }
+}

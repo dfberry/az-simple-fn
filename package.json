@@ -1,0 +1,29 @@
+{
+  "name": "dfb-functions",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "npm run format && npm run lint && tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run build",
+    "start": "func start",
+    "test": "echo \"No tests yet...\"",
+    "format": "prettier --write **/*.ts",
+    "lint": "eslint **/*.ts --fix"
+  },
+  "dependencies": {
+    "@azberry/az-simple": "^0.1.6"
+  },
+  "devDependencies": {
+    "@azure/functions": "^3.0.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.46.1",
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.1",
+    "typescript": "^4.0.0"
+  }
+}
