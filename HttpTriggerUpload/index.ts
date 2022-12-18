@@ -27,6 +27,7 @@ const httpTrigger: AzureFunction = async function (
   };
 
   const config: Config = {
+    dateTime: new Date().toUTCString(),
     log: context.log,
     ...debugConfig,
     ...fnConfig

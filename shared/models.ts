@@ -1,5 +1,9 @@
 import { Context } from '@azure/functions';
 
+export type ConfigBase = {
+  dateTime: string;
+};
+
 export type ConfigDebugType = {
   debug: boolean;
 };
@@ -12,7 +16,8 @@ export type ConfigProcessBlobType = {
   mongoDbDatabaseName: string;
   mongoDbCollectionName: string;
 };
-export type Config = ConfigDebugType &
+export type Config = ConfigBase &
+  ConfigDebugType &
   ConfigProcessBlobType &
   Pick<Context, 'log'>;
 
@@ -22,7 +27,8 @@ export type OperationStatusTextType =
   | "failure: storage blob - data isn't array"
   | 'failure: storage blob - array has no length'
   | 'failure: storage blob - missing required configuration information'
-  | 'failure: database - missing required configuration information';
+  | 'failure: database - missing required configuration information'
+  | 'failure: database update status - missing required configuration information';
 
 export type OperationStatusType = {
   name: string;

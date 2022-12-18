@@ -81,7 +81,50 @@ export async function processJsonToDb(
   operationDatabase.data = insertResult;
   return operationDatabase;
 }
+export async function updateStatus(
+  config: Config,
+  { storageOp, databaseOp }
+): Promise<OperationStatusType> {
+  const operationDatabase: OperationStatusType = {
+    name: 'clientMongoDb.updateStatus',
+    count: 0,
+    data: undefined,
+    status: 'success',
+    statusCode: 0
+  };
 
+  if (
+    !config.mongoDbConnectionString ||
+    !config.mongoDbDatabaseName ||
+    !config.mongoDbCollectionName ||
+    !config.storageAccountBlobUrl
+  ) {
+    operationDatabase.status =
+      'failure: database update status - missing required configuration information';
+    operationDatabase.statusCode = 1;
+    return operationDatabase;
+  }
+
+  const clientMongoDb = new MongoDb(config.mongoDbConnectionString);
+  const insertResult = await clientMongoDb.uploadDocs(
+    config.mongoDbDatabaseName,
+    `${config.mongoDbCollectionName}-status`,
+    [
+      {
+        created: config.dateTime,
+        blobUrl: config.storageAccountBlobUrl,
+        storageSuccess: storageOp.statusCode,
+        storageCount: storageOp.count,
+        databaseSuccess: databaseOp.statusCode,
+        databaseCount: databaseOp.count
+      }
+    ]
+  );
+
+  operationDatabase.count = insertResult['insertedCount'];
+  operationDatabase.data = insertResult;
+  return operationDatabase;
+}
 export async function processBlobToDb(
   config: Config
 ): Promise<Array<OperationStatusType>> {
@@ -101,6 +144,13 @@ export async function processBlobToDb(
   // Database
   const databaseOp = await processJsonToDb(config, storageOp.data);
   processReturn.push(databaseOp);
+
+  if (databaseOp.statusCode !== 0) {
+    return processReturn;
+  }
+
+  const dataaseOp2 = await updateStatus(config, { storageOp, databaseOp });
+  processReturn.push(dataaseOp2);
 
   return processReturn;
 }
